@@ -1,0 +1,242 @@
+﻿<Window x:Class="TaskManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Process Manager"
+        Height="910"
+        Width="1651"
+        MinHeight="600"
+        MinWidth="900"
+        WindowStartupLocation="CenterScreen"
+        Background="#F2F4F7">
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0"
+                Background="White"
+                CornerRadius="8"
+                Padding="15"
+                Margin="0,0,0,12">
+
+            <DockPanel>
+                <TextBlock Text="PROCESS MANAGER"
+                           FontSize="22"
+                           FontWeight="Bold"
+                           VerticalAlignment="Center"/>
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+
+                    <TextBlock Text="Refresh interval (sec):"
+                               VerticalAlignment="Center"
+                               Margin="10,0"/>
+
+                    <TextBox x:Name="IntervalBox"
+                             Text="2"
+                             Width="55"
+                             Height="28"
+                             VerticalContentAlignment="Center"
+                             TextAlignment="Center"/>
+
+                    <Button Content="Start"
+                            Width="75"
+                            Margin="10,0,5,0"
+                            Click="Start_Click"/>
+
+                    <Button Content="Stop"
+                            Width="75"
+                            Margin="5,0"
+                            Click="Stop_Click"/>
+
+                    <Button Content="Refresh"
+                            Width="85"
+                            Margin="5,0"
+                            Click="Refresh_Click"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- Main content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Process list -->
+            <Border Grid.Column="0"
+                    Background="White"
+                    CornerRadius="8"
+                    Padding="10">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Running processes"
+                               FontSize="17"
+                               FontWeight="Bold"
+                               Margin="5,5,5,12"/>
+
+                    <DataGrid x:Name="ProcessGrid"
+                              Grid.Row="1"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              SelectionMode="Single"
+                              SelectionUnit="FullRow"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              SelectionChanged="ProcessGrid_SelectionChanged"
+                              HeadersVisibility="Column"
+                              GridLinesVisibility="Horizontal"
+                              RowHeight="28">
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Process name"
+                                                Binding="{Binding Name}"
+                                                Width="*"/>
+
+                            <DataGridTextColumn Header="PID"
+                                                Binding="{Binding Id}"
+                                                Width="75"/>
+
+                            <DataGridTextColumn Header="Threads"
+                                                Binding="{Binding ThreadCount}"
+                                                Width="75"/>
+
+                            <DataGridTextColumn Header="CPU time"
+                                                Binding="{Binding CpuTime}"
+                                                Width="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Border>
+
+            <!-- Process details -->
+            <Border Grid.Column="2"
+                    Background="White"
+                    CornerRadius="8"
+                    Padding="15">
+
+                <StackPanel>
+                    <TextBlock Text="Process information"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Margin="0,0,0,20"/>
+
+                    <TextBlock Text="Process name:"
+                               FontWeight="Bold"/>
+
+                    <TextBlock x:Name="NameText"
+                               Text="-"
+                               Margin="0,3,0,15"/>
+
+                    <TextBlock Text="Process ID:"
+                               FontWeight="Bold"/>
+
+                    <TextBlock x:Name="IdText"
+                               Text="-"
+                               Margin="0,3,0,15"/>
+
+                    <TextBlock Text="Start time:"
+                               FontWeight="Bold"/>
+
+                    <TextBlock x:Name="StartTimeText"
+                               Text="-"
+                               TextWrapping="Wrap"
+                               Margin="0,3,0,15"/>
+
+                    <TextBlock Text="CPU time:"
+                               FontWeight="Bold"/>
+
+                    <TextBlock x:Name="CpuTimeText"
+                               Text="-"
+                               Margin="0,3,0,15"/>
+
+                    <TextBlock Text="Thread count:"
+                               FontWeight="Bold"/>
+
+                    <TextBlock x:Name="ThreadCountText"
+                               Text="-"
+                               Margin="0,3,0,15"/>
+
+                    <TextBlock Text="Process copies:"
+                               FontWeight="Bold"/>
+
+                    <TextBlock x:Name="CopiesText"
+                               Text="-"
+                               Margin="0,3,0,25"/>
+
+                    <Button Content="Terminate process"
+                            Height="38"
+                            Background="#D9534F"
+                            Foreground="White"
+                            FontWeight="Bold"
+                            Click="Kill_Click"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- Launch applications -->
+        <Border Grid.Row="2"
+                Background="White"
+                CornerRadius="8"
+                Padding="15"
+                Margin="0,12,0,0">
+
+            <StackPanel>
+                <TextBlock Text="Launch applications"
+                           FontSize="17"
+                           FontWeight="Bold"
+                           Margin="0,0,0,12"/>
+
+                <WrapPanel Margin="0,0,0,12">
+                    <Button Content="Notepad"
+                            Width="110"
+                            Height="32"
+                            Margin="0,0,10,0"
+                            Click="Notepad_Click"/>
+
+                    <Button Content="Calculator"
+                            Width="110"
+                            Height="32"
+                            Margin="0,0,10,0"
+                            Click="Calculator_Click"/>
+
+                    <Button Content="Paint"
+                            Width="110"
+                            Height="32"
+                            Margin="0,0,10,0"
+                            Click="Paint_Click"/>
+                </WrapPanel>
+
+                <DockPanel>
+                    <Button Content="Browse"
+                            Width="90"
+                            DockPanel.Dock="Right"
+                            Margin="10,0,0,0"
+                            Click="Browse_Click"/>
+
+                    <Button Content="Launch"
+                            Width="90"
+                            DockPanel.Dock="Right"
+                            Margin="0,0,10,0"
+                            Click="Launch_Click"/>
+
+                    <TextBox x:Name="PathBox"
+                             Height="30"
+                             VerticalContentAlignment="Center"
+                             ToolTip="Enter the path to an application (.exe)"/>
+                </DockPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
